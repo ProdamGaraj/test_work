@@ -1,0 +1,156 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="arch" name="Архитектура">
+    <mxGraphModel dx="1200" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1150" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Цены конкурентов → клиентский прайс&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="320" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- New pipeline -->
+        <mxCell id="cron" value="&lt;b&gt;cron&lt;/b&gt;&lt;br&gt;раз в час" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sites" value="&lt;b&gt;Площадки ~20&lt;/b&gt;&lt;br&gt;внешние источники" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="20" y="110" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="collector" value="&lt;b&gt;Сборщик&lt;/b&gt; (новая система сбора)&lt;br&gt;каждая площадка отдельно, с тайм-аутом" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="270" y="110" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="offers" value="&lt;b&gt;БД: offers&lt;/b&gt;&lt;br&gt;run_id, площадка, товар,&lt;br&gt;цена, доставка, статус" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="280" y="220" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="calc" value="&lt;b&gt;Расчёт: recommend_price&lt;/b&gt;&lt;br&gt;проверка пригодности данных&lt;br&gt;→ APPLY / REVIEW / HOLD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="270" y="350" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="rec" value="&lt;b&gt;БД: recommendations&lt;/b&gt;&lt;br&gt;run_id, товар, цена,&lt;br&gt;решение, причина&lt;br&gt;UNIQUE(run_id, товар)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="280" y="460" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Decision branches -->
+        <mxCell id="review" value="&lt;b&gt;REVIEW: менеджер&lt;/b&gt;&lt;br&gt;ручная проверка;&lt;br&gt;до проверки — старая цена" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="20" y="620" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="export" value="&lt;b&gt;Экспорт Excel&lt;/b&gt;&lt;br&gt;формат старой системы;&lt;br&gt;временный файл → rename" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="280" y="620" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hold" value="&lt;b&gt;HOLD&lt;/b&gt;&lt;br&gt;цена не меняется;&lt;br&gt;оповещение, если HOLD&lt;br&gt;N часов подряд" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="540" y="620" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Existing system -->
+        <mxCell id="pricesys" value="&lt;b&gt;Действующая система прайсов&lt;/b&gt;&lt;br&gt;не меняется" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="280" y="780" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="client" value="&lt;b&gt;Клиентские прайсы&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="280" y="900" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Old pipeline -->
+        <mxCell id="oldcollector" value="&lt;b&gt;Старый сбор&lt;/b&gt;&lt;br&gt;работает в переходный период" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="840" y="110" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="oldexcel" value="&lt;b&gt;Excel (старый)&lt;/b&gt;" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="850" y="230" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="compare" value="&lt;b&gt;Теневой режим&lt;/b&gt;&lt;br&gt;сравнение нового и старого Excel:&lt;br&gt;разница цен, доля REVIEW / HOLD" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="840" y="760" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Notes -->
+        <mxCell id="flag" value="Флаг auto_apply = false →&lt;br&gt;все изменения идут в REVIEW" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#ffffff;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="355" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="idem" value="run_id = час запуска.&lt;br&gt;Повторная обработка — upsert,&lt;br&gt;без дублей и двойного применения" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#ffffff;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="475" width="210" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="&lt;b&gt;Цвета:&lt;/b&gt; синий — новая система; зелёный — БД;&lt;br&gt;оранжевый — действующая система; серый — старый сбор" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="900" width="420" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Edges: new pipeline -->
+        <mxCell id="e_cron" value="запуск" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="cron" target="collector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sites" value="предложения" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="sites" target="collector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_collect" value="сырые данные + статус" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="collector" target="offers">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_offers" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="offers" target="calc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_calc" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="calc" target="rec">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_review" value="REVIEW" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="rec" target="review">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="590" />
+              <mxPoint x="120" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_apply" value="APPLY" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="rec" target="export">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_hold" value="HOLD" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="rec" target="hold">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="590" />
+              <mxPoint x="640" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_approved" value="подтверждено" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="review" target="export">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_export" value="новый Excel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="export" target="pricesys">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_client" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="pricesys" target="client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Edges: old pipeline, shadow mode, rollback -->
+        <mxCell id="e_old" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#666666;" edge="1" parent="1" source="oldcollector" target="oldexcel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_rollback" value="откат: вернуть путь&lt;br&gt;к старому файлу" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#666666;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oldexcel" target="pricesys">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1110" y="265" />
+              <mxPoint x="1110" y="890" />
+              <mxPoint x="800" y="890" />
+              <mxPoint x="800" y="815" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_shadow_new" value="копия (теневой режим)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#9673a6;fontSize=10;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="export" target="compare">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="740" />
+              <mxPoint x="800" y="740" />
+              <mxPoint x="800" y="783" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_shadow_old" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#9673a6;" edge="1" parent="1" source="oldexcel" target="compare">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Note links -->
+        <mxCell id="e_flag" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1" source="flag" target="calc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_idem" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" edge="1" parent="1" source="idem" target="rec">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
